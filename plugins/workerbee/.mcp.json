@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "workerbee": {
+      "type": "http",
+      "url": "https://mcp-staging.workerbee.ai/api/v1/mcp"
+    }
+  }
+}

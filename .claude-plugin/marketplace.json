@@ -1,0 +1,14 @@
+{
+  "name": "workerbee-staging",
+  "displayName": "Workerbee (staging)",
+  "owner": {
+    "name": "Workerbee Inc.",
+    "url": "https://github.com/Workerbee-Inc"
+  },
+  "plugins": [
+    {
+      "name": "workerbee",
+      "source": "./plugins/workerbee"
+    }
+  ]
+}

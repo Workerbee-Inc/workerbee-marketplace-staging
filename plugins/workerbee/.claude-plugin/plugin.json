@@ -1,0 +1,12 @@
+{
+  "name": "workerbee",
+  "description": "Workerbee — the system for talent decisions. Customer skills that orchestrate the Workerbee MCP server end to end: build a Success Profile, evaluate talent, rank a shortlist, explain fit, compare people, find similar talent, log decisions, and improve the profile from feedback.",
+  "version": "0.17.0",
+  "author": {
+    "name": "Workerbee Inc.",
+    "email": "ryan.spears@workerbee.ai"
+  },
+  "homepage": "https://github.com/Workerbee-Inc/workerbee-marketplace-staging",
+  "repository": "https://github.com/Workerbee-Inc/workerbee-marketplace-staging",
+  "license": "UNLICENSED"
+}
