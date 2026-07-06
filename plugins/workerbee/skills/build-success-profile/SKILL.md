@@ -1,6 +1,6 @@
 ---
 name: build-success-profile
-description: Build a Workerbee Success Profile — the reusable standard for what good looks like in a role — from a job description, top performers, and manager context. Use when a customer says "I need to hire a [title]", pastes a JD, says "create a role", "build a success profile", "define what good looks like here", "set the standard for this role", or "open a req". Runs the quality gate (JD + 2–3 qualifying questions), then reveals the AI-structured Success Profile with core vs nice-to-have capabilities, confidence, and provenance. Calls the live Workerbee MCP tools create_role, get_role_context, get_success_profile, and update_capability_role.
+description: Build a Workerbee Success Profile — the reusable standard for what good looks like in a role — from a job description, top performers, and manager context. Use when a customer says "I need to hire a [title]", pastes a JD, says "create a role", "build a success profile", "define what good looks like here", "set the standard for this role", or "open a req". Runs the quality gate (JD + 2–3 qualifying questions), then reveals the AI-structured Success Profile with core vs nice-to-have capabilities, confidence, and provenance. Calls the live Workerbee MCP tools create_job, get_job_context, get_success_profile, and update_capability_role.
 ---
 
 # Build Success Profile
@@ -15,15 +15,15 @@ Speak as Workerbee — the system for talent decisions. Grounded, direct, precis
 ## Tools you orchestrate
 | Tool | Purpose |
 |---|---|
-| `create_role` | Create the role from a JD. Params: `jdText` (required), `roleName`. Returns `{ jobRoleId, status: JOB_SUBMITTED }`; the JD-extraction pipeline structures it automatically. |
-| `get_role_context` | Poll until extraction completes. Param: `jobRoleId`. While structuring it returns `isReady:false` + `retryAfterSec` — wait and retry. When ready, returns the JobPosting + match summary + `workspaceUrl`. |
+| `create_job` | Create the role from a JD. Params: `jdText` (required), `roleName`. Returns `{ jobRoleId, status: JOB_SUBMITTED }`; the JD-extraction pipeline structures it automatically. |
+| `get_job_context` | Poll until extraction completes. Param: `jobRoleId`. While structuring it returns `isReady:false` + `retryAfterSec` — wait and retry. When ready, returns the JobPosting + match summary + `workspaceUrl`. |
 | `get_success_profile` | Reveal the structured Success Profile. Param: `jobRoleId`. Returns the capability map (core / nice-to-have), confidence, and provenance. |
 | `update_capability_role` | Refine the standard from manager context or top performers. Params: `jobRoleId`, `skills: [{ skillName, importance }]` where importance ∈ `core` \| `nice-to-have` \| `exclude`. |
 
 ## The flow
 1. **Quality gate.** Ask for the JD (paste or describe). If it's thin, ask 2–3 qualifying questions (must-have skills, seniority, domain). Don't skip this — a vague input produces a vague standard.
-2. **Create.** Call `create_role` with `jdText` (+ `roleName`). Tell the customer the standard is being structured (~10–20s).
-3. **Wait honestly.** Poll `get_role_context`; while `isReady:false`, narrate progress and retry after `retryAfterSec`. Never present a profile before it's ready.
+2. **Create.** Call `create_job` with `jdText` (+ `roleName`). Tell the customer the standard is being structured (~10–20s).
+3. **Wait honestly.** Poll `get_job_context`; while `isReady:false`, narrate progress and retry after `retryAfterSec`. Never present a profile before it's ready.
 4. **Reveal.** Call `get_success_profile` and present the capability map: core vs nice-to-have, with confidence and provenance ("based on the JD + N similar roles"). This is the standard that will apply to everyone.
 5. **Refine (optional).** If the manager adds context ("we're heavy on cloud", "must have led a team") or names a top performer to anchor on, map it to capability changes and apply via `update_capability_role`. Confirm what changed in one line.
 6. **Hand forward.** Once the profile holds: "Standard's set. Want to evaluate people against it, or set the ranking weights first?" (→ evaluate-talent / improve-profile).

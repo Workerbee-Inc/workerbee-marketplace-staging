@@ -24,7 +24,7 @@ connection any time with `/mcp`.
 
 ## What's inside
 
-A single `workerbee` plugin (v0.18.1) with ten skills that orchestrate the
+A single `workerbee` plugin (v0.18.4) with ten skills that orchestrate the
 Workerbee MCP server end to end. This build connects to **staging** (`mcp-staging.workerbee.ai`) — for testing, not customer data; nothing else
 from Workerbee's internal tooling ships here.
 

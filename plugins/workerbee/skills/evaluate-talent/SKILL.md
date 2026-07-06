@@ -1,6 +1,6 @@
 ---
 name: evaluate-talent
-description: Evaluate internal or external people against a Workerbee Success Profile — one standard applied to everyone. Use when a customer drags in CVs/resumes, says "here are some candidates", "evaluate these people", "score my internal team against this role", "add these applicants", "how do these people stack up against the standard", or "upload resumes". Ingests internal workforce or external applicants and scores them against the role's Success Profile via the live ingest_cv and match_candidates MCP tools.
+description: Evaluate internal or external people against a Workerbee Success Profile — one standard applied to everyone. Use when a customer drags in CVs/resumes, says "here are some candidates", "evaluate these people", "score my internal team against this role", "add these applicants", "how do these people stack up against the standard", or "upload resumes". Ingests internal workforce or external applicants via create_upload_session + get_upload_session_status, then scores them against the role's Success Profile via match_candidates on the live Workerbee MCP server.
 ---
 
 # Evaluate Talent
@@ -15,13 +15,15 @@ Grounded, direct, precise. The point is one standard applied to everyone, intern
 ## Tools you orchestrate
 | Tool | Purpose |
 |---|---|
-| `ingest_cv` | Add people to the role. Params: `jobRoleId`, `jobRoleDocType` (`INTERNAL_WORKFORCE` for internal people, `APPLICANTS` for external), `files: [{ filename, contentType, contentBase64 }]` (PDF/DOCX). Returns per-file `docId`; report failures honestly, never silently drop a file. |
+| `create_upload_session` | Start a browser upload for the role. Params: `jobRoleId`, `jobRoleDocType` (`INTERNAL_WORKFORCE` for internal people, `APPLICANTS` for external), optional `maxFiles`. Returns `{ sessionId, uploadUrl, expiresAt, maxFiles, allowedContentTypes }`. Present `uploadUrl` — the user uploads PDF/DOCX/ZIP there; no file bytes pass through MCP. |
+| `get_upload_session_status` | Poll document processing. Param: `sessionId`. Returns `receivedFiles`, `processing.allProcessed`, `processing.anyFailed`, and `retryAfterSec` while work is in flight. Keep polling until every file is terminal (`PROCESSED` or `FAILED`); report failures honestly from each `errorMessage`. `COMPLETED` session status only means the user finished uploading — keep polling until `allProcessed`. |
+| `get_job_context` | Confirm applicants landed and matching finished. Param: `jobRoleId`. After upload processing, poll until `matchStatus` is `complete` and applicants appear under `matches.byPool` before claiming candidates are ready. |
 | `match_candidates` | Score everyone against the Success Profile. Params: `jobRoleId`, optional `limit`/`offset` (paging). **Synchronous** — returns the ranked shortlist inline. Each person carries **`displayScore`** (0–100 headline), `scores` (l1–l4 + `composite`), and `source` (Internal Profiles / Applicants / Workerbee Network); response carries `totalConsidered`. Requires extraction complete. |
 | `get_matched_profile_details` | Pull one person's full evaluation. Params: `jobRoleId`, `consultantId`. Returns structured resume + match reasoning (strengths, gaps, summary) + the four sub-scores. |
 
 ## The flow
 1. **Confirm the role.** Evaluation is always against a specific Success Profile — confirm the `jobRoleId`. If none exists, route to build-success-profile first.
-2. **Ingest people.** For uploaded files, choose the doc type by who they are: internal employees → `INTERNAL_WORKFORCE`; outside applicants → `APPLICANTS`. Batch them; confirm counts and report any per-file failure.
+2. **Ingest people.** Call `create_upload_session` with the right `jobRoleDocType` (internal employees → `INTERNAL_WORKFORCE`; outside applicants → `APPLICANTS`). Give the customer the `uploadUrl` and ask them to upload their files in the browser. Poll `get_upload_session_status` until `processing.allProcessed` (or stop on `anyFailed` and surface which files failed). Then poll `get_job_context` until `matchStatus` is `complete` so ingested applicants are ranked before you present scores.
 3. **Evaluate.** Call `match_candidates`. Everyone — uploaded internal/external plus the connected talent pool — is scored against the one standard.
 4. **Surface honestly.** Report how each `source` did (internal vs external are now directly comparable). Offer the ranked view (→ rank-shortlist) or a single person's detail (→ explain-fit).
 

@@ -1,6 +1,6 @@
 ---
 name: rank-shortlist
-description: Produce a ranked shortlist of people for a Workerbee role. Use when a customer says "rank them", "who are the top candidates?", "run the matching", "give me a shortlist", "score the applicants", or "who should I look at first?". Runs the live match_candidates tool (synchronous — returns the ranked list inline) and presents scannable ranked cards with one-line drivers; reads existing results via get_role_context.
+description: Produce a ranked shortlist of people for a Workerbee role. Use when a customer says "rank them", "who are the top candidates?", "run the matching", "give me a shortlist", "score the applicants", or "who should I look at first?". Runs the live match_candidates tool (synchronous — returns the ranked list inline) and presents scannable ranked cards with one-line drivers; reads existing results via get_job_context.
 ---
 
 # Rank Shortlist
@@ -16,7 +16,7 @@ Grounded, direct, precise. Present the ranking as a system output. One-line driv
 | Tool | Purpose |
 |---|---|
 | `match_candidates` | Score and rank for a role. Params: `jobRoleId`, optional `limit` (page size per roster, default 50, max 500) + `offset` (default 0). **Synchronous, no polling** — returns the ranked shortlist inline. Each candidate: **`displayScore`** (0–100 headline), `consultantId`, `name`, `scores` (l1–l4 + `composite` 0–1, breakdown only), `source`, `rank` (continues across pages). Response also carries **`totalConsidered`** (total evaluated across rosters — for "top N of M"), `totalCount` (this page), and a `workspaceUrl`. Page with `offset += limit` until a page comes back empty. Requires extraction complete (else `EXTRACTION_IN_PROGRESS`). |
-| `get_role_context` | Read the *existing* ranking without re-scoring. Param: `jobRoleId`. Returns `matches` summary: `count`, `byPool`, `top5`. Use this to recap a prior run. |
+| `get_job_context` | Read the *existing* ranking without re-scoring. Param: `jobRoleId`. Returns `matches` summary: `count`, `byPool`, `top5`. Use this to recap a prior run. |
 | `invite_candidate` | Send a talent invite. Required: `consultantId`, `jobId` (the role's UUID). Optional: `consultantName`, `consultantEmail`. Returns `inviteId`. Use `consultantId` and `jobId` from the `match_candidates` response — both are available after ranking. |
 | `list_job_invites` | List invites sent for a role. Required: `jobId`. Optional: `inviteStatus` filter (see status values below), `jobRoleDocType` filter, `page` + `limit` (max 100, default all). Returns `consultantId`, `name`, `email`, and `inviteStatus` per candidate. |
 

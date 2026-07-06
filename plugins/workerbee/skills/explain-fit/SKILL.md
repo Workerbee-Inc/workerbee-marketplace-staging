@@ -15,7 +15,7 @@ Grounded, direct, precise. Explain in terms of the standard: which capabilities 
 ## Tools you orchestrate
 | Tool | Purpose |
 |---|---|
-| `get_matched_profile_details` | The per-candidate evidence. Params: `jobRoleId`, `consultantId`. Returns the structured resume + match reasoning (strengths, gaps, summary), **`displayScore`** (0–100 headline — same field as match_candidates / get_role_context), the four 0–1 sub-scores (l1_title, l2_must_have, l3_supportive, l4_seniority), and `composite`. |
+| `get_matched_profile_details` | The per-candidate evidence. Params: `jobRoleId`, `consultantId`. Returns the structured resume + match reasoning (strengths, gaps, summary), **`displayScore`** (0–100 headline — same field as match_candidates / get_job_context), the four 0–1 sub-scores (l1_title, l2_must_have, l3_supportive, l4_seniority), and `composite`. |
 | `get_decision_audit` | The auditable decision record for the role. Param: `jobRoleId`. The reviewable trail behind how the role's decisions were produced. |
 
 ## The flow

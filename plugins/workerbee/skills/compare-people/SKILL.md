@@ -16,10 +16,10 @@ Grounded, direct, precise. Compare on the standard, capability by capability. St
 | Tool | Purpose |
 |---|---|
 | `get_matched_profile_details` | Per-person evidence for the comparison. Params: `jobRoleId`, `consultantId` (call once per person). Returns **`displayScore`** (0–100 headline), the four sub-scores (l1_title, l2_must_have, l3_supportive, l4_seniority), `composite`, and strengths/gaps reasoning. |
-| `get_role_context` | The shared standard + ranking context. Param: `jobRoleId`. Use its `top5` / match summary to resolve who's in play and their `consultantId`s. |
+| `get_job_context` | The shared standard + ranking context. Param: `jobRoleId`. Use its `top5` / match summary to resolve who's in play and their `consultantId`s. |
 
 ## The flow
-1. **Resolve the people** to `consultantId`s (from the current ranking or `get_role_context.top5`). Confirm you've got the right ones; ask once if ambiguous.
+1. **Resolve the people** to `consultantId`s (from the current ranking or `get_job_context.top5`). Confirm you've got the right ones; ask once if ambiguous.
 2. **Pull each person's evidence** via `get_matched_profile_details` (one call per person).
 3. **Present a side-by-side** against the same Success Profile:
    - A compact table: each person's four sub-scores + `composite`, same rows for everyone.
