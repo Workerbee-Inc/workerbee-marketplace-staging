@@ -1,7 +1,7 @@
 {
   "name": "workerbee",
-  "description": "Workerbee — the system for talent decisions. Customer skills that orchestrate the Workerbee MCP server end to end: build a Success Profile, evaluate talent, rank a shortlist, explain fit, compare people, find similar talent, log decisions, and improve the profile from feedback.",
-  "version": "0.18.5",
+  "description": "Workerbee \u2014 the system for talent decisions. Customer skills that orchestrate the Workerbee MCP server end to end: build a Success Profile, evaluate talent, rank a shortlist, explain fit, compare people, find similar talent, log decisions, and improve the profile from feedback.",
+  "version": "0.18.6",
   "author": {
     "name": "Workerbee Inc.",
     "email": "ryan.spears@workerbee.ai"
