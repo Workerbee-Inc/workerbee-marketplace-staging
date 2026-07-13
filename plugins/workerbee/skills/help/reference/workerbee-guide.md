@@ -24,16 +24,17 @@ Workerbee is **not** a job board, a recruiter, an ATS, or an AI layer bolted ont
 - **Decision audit** — the reviewable record behind how a role's decisions were produced: what standard applied and what drove the ranking. The basis for defensible, repeatable decisions.
 
 ## The end-to-end flow (and which skill does each step)
-Define the standard → evaluate people → rank the shortlist → explain fit → compare options → find more like them → log the decision → improve the system.
+Define the standard → evaluate people → rank the shortlist → invite the top picks → explain fit → compare options → find more like them → log the decision → improve the system.
 
 1. **build-success-profile** — define the standard from a JD + manager context; reveal the Success Profile.
 2. **evaluate-talent** — score internal or external people against that standard (upload CVs or use the connected pool).
 3. **rank-shortlist** — produce the ranked shortlist for a role.
-4. **explain-fit** — explain why someone ranks where they do: strengths, gaps, rationale, evidence.
-5. **compare-people** — put two or more people side by side on the same standard.
-6. **find-similar-talent** — find more people like a top performer or strong candidate.
-7. **log-decision** — surface the auditable decision record for the role.
-8. **improve-profile** — update the standard from feedback ("we're a Microsoft shop") and re-rank. Every decision improves the system.
+4. **manage-invites** — send an invite, check who's responded on a role or company-wide, or look up a specific candidate's invite status.
+5. **explain-fit** — explain why someone ranks where they do: strengths, gaps, rationale, evidence.
+6. **compare-people** — put two or more people side by side on the same standard.
+7. **find-similar-talent** — find more people like a top performer or strong candidate.
+8. **log-decision** — surface the auditable decision record for the role.
+9. **improve-profile** — update the standard from feedback ("we're a Microsoft shop") and re-rank. Every decision improves the system.
 
 ## Honest boundaries
 - Workerbee is a consistent standard in a world of inconsistent ones — not a savior. Don't promise a specific hire or job outcome.

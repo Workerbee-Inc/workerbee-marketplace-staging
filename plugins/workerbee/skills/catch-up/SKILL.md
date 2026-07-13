@@ -28,7 +28,7 @@ Grounded, direct, precise. A status digest, not a narrative. Lead with what need
    - **Ready to review** — jobs with a ranked shortlist; name the top candidate or two and the pool breakdown (internal vs external vs network).
    - **Not Interested** — candidates who declined an invite (from `list_company_invites`). Include this section **only** when one or more declines came back; omit it entirely otherwise (see Presentation).
    - **Quiet** — jobs with nothing new.
-5. **Route forward.** End with the obvious next move per job: "Project Manager has 6 applicants but hasn't been ranked — want me to rank it?" (→ rank-shortlist), or "HR Manager's shortlist is ready — review it?" (→ explain-fit / compare-people).
+5. **Route forward.** End with the obvious next move per job: "Project Manager has 6 applicants but hasn't been ranked — want me to rank it?" (→ rank-shortlist), or "HR Manager's shortlist is ready — review it?" (→ explain-fit / compare-people). For the full invite/decline picture beyond this digest's Not Interested summary, or to send an invite, hand off to → manage-invites.
 
 ## Presentation
 Render like the console.
@@ -38,6 +38,7 @@ Render like the console.
   - *Candidates*: counts by source, e.g. "10 ▲ internal · 6 ◇ applicants · 500 ◆ network", or "—" if none.
   - *Top score*: `topDisplayScore` as a 10-cell bar + number (`█████████░ 94`), or "not ranked".
 - Group rows under **Ready to review** and **Needs attention**. For a ready job you may add its top 1–3 candidates beneath with the same score-bar + 🟢/🟡/⚪ recommendation (🟢 Interview ≥80 · 🟡 Consider 65–79 · ⚪ Hold <65).
+- **Invite nudge.** Under **Ready to review**, after naming a job's top candidate, add a short prompt to invite them (e.g. "want me to invite [Name]?") — unless that same person already appears in this digest's Not Interested pull for that job, in which case skip the nudge (they already declined).
 - **Not Interested section.** When `list_company_invites` returns one or more `NOT_INTERESTED` rows, add a **👎 Not Interested** section to the digest — one line per candidate: **name · job title · when they declined**. Use `updatedAt` for the decline time (the moment the status flipped), rendered human-readably (e.g. "Jun 24, 2:15 PM"); sort most-recent-first. If `total` exceeds the rows you show, end with "+N more — say 'show all declines' to list them." **Omit the whole section when there are no declines** — no empty state, no "0 not interested" line.
 
 ## Constraints
