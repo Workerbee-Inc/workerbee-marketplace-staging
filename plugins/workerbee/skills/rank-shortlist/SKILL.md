@@ -34,7 +34,7 @@ Render like the Workerbee console, not raw output.
   - *Source*: ◆ Workerbee Network · ◇ Applicant · ▲ Internal.
   - *Score*: `displayScore` as a 10-cell bar + the number, e.g. `█████████░ 94`.
   - *Recommendation* (derived from `displayScore`): 🟢 **Interview** (≥80) · 🟡 **Consider** (65–79) · ⚪ **Hold** (<65).
-- **Non-negotiables.** If the role has `nonNegotiables`, state them in one line above the table ("Non-negotiables for this role: X, Y"). For any candidate with a non-empty `nonNegotiablesMissing`, append ⛔ to their Recommendation and make the missing item their driver line ("⛔ missing non-negotiable: Kubernetes") — never label them 🟢 Interview no matter the score, since the score is already gated (`g_nn`). A candidate meeting all non-negotiables needs no marker.
+- **Non-negotiables.** If the role has `nonNegotiables`, state them in one line above the table ("Non-negotiables for this role: X, Y"). For any candidate with a non-empty `nonNegotiablesMissing`, append ⛔ to their Recommendation and make the missing item their driver line ("⛔ missing non-negotiable: Kubernetes") — never label them 🟢 Interview no matter the score, since the score is already gated (`g_nn`). A candidate meeting all non-negotiables needs no marker. A gate may be a **group** (authored with `satisfiedBy` alternates — see update_capability_role): a candidate matching ANY alternate meets it, `nonNegotiables` lists the gate's head name, and all counts are per-gate — trust a met gate; don't re-check the exact spelling yourself.
 - Below the table: one line of context + the next step, plus the proactive invite nudge naming the top candidate. If the response carries `workspaceUrl`, offer it as "Open in workspace →".
 
 ## Constraints
