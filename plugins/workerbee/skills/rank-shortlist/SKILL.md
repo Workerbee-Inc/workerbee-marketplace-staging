@@ -42,3 +42,6 @@ Render like the Workerbee console, not raw output.
 - `match_candidates` is synchronous now; don't poll for results or claim a wait that isn't happening.
 - If there are no people to rank, point back to evaluate-talent (ingest people) rather than showing an empty list as a result.
 - **Non-negotiables are hard gates.** Never present a candidate with a non-empty `nonNegotiablesMissing` as a clean top match — their score is already penalized (`g_nn`) and the missing item must be visible. Don't re-rank to hide it; surface it.
+
+## Demo-flow nudge (trial/demo accounts)
+On trial/demo accounts candidates appear as initials — proactively note (once) that identities stay anonymized until a candidate consents to meet the employer. After presenting the shortlist, offer the next step: "Ask me why #1 ranks above #3 — every ranking comes with evidence."

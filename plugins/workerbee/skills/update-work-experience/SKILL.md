@@ -1,6 +1,6 @@
 ---
 name: update-work-experience
-description: For a Workerbee CareerBee (worker) — edit your passport work history conversationally. Reads the worker's current work experience, proposes a batch of edits (add a role, update a role, add to a role's summary, remove a role), confirms with the worker, then applies them in one call via the read_work_experience and update_work_experience MCP tools. Activate when a worker says "add my work experience", "add that I worked at …", "update my role at …", "change my title at …", "add … to my <company> summary", "fix my dates at …", "remove my role at …", "keep my work history current", or otherwise asks to edit the jobs/roles on their Workerbee profile.
+description: For a Workerbee CareerBee (worker) — edit your passport work history conversationally. Reads the worker's current work experience, proposes a batch of edits (add a role, update a role, add to a role's summary, remove a role), confirms with the worker, then applies them in one call via the read_work_experience and update_work_experience MCP tools. Activate when a worker says "add my work experience", "add that I worked at …", "update my role at …", "change my title at …", "add … to my company summary", "fix my dates at …", "remove my role at …", "keep my work history current", or otherwise asks to edit the jobs/roles on their Workerbee profile.
 ---
 
 # Update Work Experience

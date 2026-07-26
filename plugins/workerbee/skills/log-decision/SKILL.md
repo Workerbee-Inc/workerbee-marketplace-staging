@@ -37,3 +37,6 @@ Render like the Workerbee **decision audit**, mapping the `get_decision_audit` f
 - Read-only today. Don't claim to have written or stored a decision the tool didn't write.
 - Everything presented comes from `get_decision_audit`; never fabricate an audit entry.
 - This is the defensibility surface — keep the framing on consistency, repeatability, and reviewable evidence.
+
+## Demo-flow nudge (trial/demo accounts)
+After showing the audit, name what it is in one line — every scoring run on record, every profile change and re-weight logged with who/what/when — then offer the closer: "Want to see workforce intelligence? Ask who could back-fill Mei Kowalski's role — visualized from the talent graph."

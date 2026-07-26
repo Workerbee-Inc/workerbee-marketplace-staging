@@ -1,0 +1,91 @@
+<!-- Workerbee Talent Graph — fixed render template (WB-1481).
+     To use: emit this file verbatim as an HTML artifact, replacing ONLY the
+     line `const VIZ = __VIZ_DATA__;` with the tool's viz payload, e.g.
+     const VIZ = {"nodes":[...],"edges":[...]};
+     Do not alter the layout/style code. Deterministic layout (no physics). -->
+<div id="wb-talent-graph" style="width:100%;background:radial-gradient(120% 90% at 50% 20%,#151c28 0%,#0d1017 65%);border-radius:14px;padding:8px 0 14px;font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;color:#e9edf4">
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:12px;color:#8b95a9;padding:8px 12px 2px">
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#f2b441;margin-right:5px"></span>subject</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#35d0c4;margin-right:5px"></span>skill</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#c07cf0;margin-right:5px"></span>person</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#5b9dff;margin-right:5px"></span>occupation</span>
+    <span style="color:#6b7488">hover a node to focus</span>
+  </div>
+  <svg id="wb-svg" viewBox="0 0 900 640" style="width:100%;height:auto;display:block"></svg>
+</div>
+<script>
+const VIZ = __VIZ_DATA__;
+(function () {
+  const W = 900, H = 640, CX = W / 2, CY = H / 2;
+  const COLOR = { subject: "#f2b441", skill: "#35d0c4", candidate: "#c07cf0", occupation: "#5b9dff" };
+  const svg = document.getElementById("wb-svg");
+  const NS = "http://www.w3.org/2000/svg";
+  const nodes = (VIZ.nodes || []).slice();
+  const edges = (VIZ.edges || []).slice();
+  const byId = {}; nodes.forEach(n => (byId[n.id] = n));
+  const adj = {}; nodes.forEach(n => (adj[n.id] = new Set()));
+  edges.forEach(e => { if (adj[e.source] && adj[e.target]) { adj[e.source].add(e.target); adj[e.target].add(e.source); } });
+
+  // Deterministic radial layout: subject center; skills on inner ring at even
+  // angles; entities on the outer ring at the mean angle of their skills, so
+  // people cluster near the skills they share (network feel, no physics).
+  const subject = nodes.find(n => n.kind === "subject");
+  const skills = nodes.filter(n => n.kind === "skill");
+  const ents = nodes.filter(n => n.kind === "candidate" || n.kind === "occupation");
+  const pos = {};
+  if (subject) pos[subject.id] = [CX, CY];
+  const R1 = 150, R2 = 285;
+  const ang = {};
+  skills.forEach((s, i) => {
+    const a = (-Math.PI / 2) + (2 * Math.PI * i) / Math.max(skills.length, 1);
+    ang[s.id] = a; pos[s.id] = [CX + R1 * Math.cos(a), CY + R1 * Math.sin(a)];
+  });
+  ents.forEach((e, i) => {
+    const near = [...adj[e.id]].filter(x => ang[x] !== undefined).map(x => ang[x]);
+    let a;
+    if (near.length) {
+      const sx = near.reduce((p, c) => p + Math.cos(c), 0), sy = near.reduce((p, c) => p + Math.sin(c), 0);
+      a = Math.atan2(sy, sx);
+    } else { a = (-Math.PI / 2) + (2 * Math.PI * i) / Math.max(ents.length, 1); }
+    a += (i % 2 ? 0.06 : -0.06); // tiny jitter so co-located entities don't overlap
+    pos[e.id] = [CX + R2 * Math.cos(a), CY + R2 * Math.sin(a)];
+  });
+
+  function mk(tag, attrs) { const el = document.createElementNS(NS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); return el; }
+  // edges first (under nodes)
+  const edgeEls = [];
+  edges.forEach(e => {
+    const a = pos[e.source], b = pos[e.target]; if (!a || !b) return;
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+    const qx = mx + (CX - mx) * 0.18, qy = my + (CY - my) * 0.18; // bow toward center
+    const p = mk("path", { d: `M${a[0]},${a[1]} Q${qx},${qy} ${b[0]},${b[1]}`, fill: "none", stroke: "#3a4658", "stroke-width": 1, opacity: 0.5 });
+    p._ends = [e.source, e.target]; svg.appendChild(p); edgeEls.push(p);
+  });
+  // nodes
+  const nodeEls = {};
+  nodes.forEach(n => {
+    const [x, y] = pos[n.id] || [CX, CY];
+    const r = n.kind === "subject" ? 13 : n.kind === "skill" ? 7 : 9;
+    const g = mk("g", { transform: `translate(${x},${y})`, style: "cursor:pointer" });
+    const c = mk("circle", { r, fill: COLOR[n.kind] || "#8b95a9", stroke: "#0d1017", "stroke-width": 2 });
+    const anchor = x < CX - 20 ? "end" : x > CX + 20 ? "start" : "middle";
+    const dx = anchor === "end" ? -(r + 5) : anchor === "start" ? (r + 5) : 0;
+    const dy = anchor === "middle" ? (y < CY ? -(r + 7) : (r + 14)) : 4;
+    const t = mk("text", { x: dx, y: dy, "text-anchor": anchor, fill: "#c8d0dd", "font-size": n.kind === "subject" ? 14 : 12, "font-weight": (n.kind === "subject" || n.kind === "candidate") ? 600 : 400 });
+    t.textContent = n.label || "";
+    g.appendChild(c); g.appendChild(t); svg.appendChild(g);
+    nodeEls[n.id] = { g, c, t };
+    g.addEventListener("mouseenter", () => focus(n.id));
+    g.addEventListener("mouseleave", clear);
+  });
+  function focus(id) {
+    const keep = new Set([id, ...adj[id]]);
+    nodes.forEach(n => { const e = nodeEls[n.id]; const on = keep.has(n.id); e.g.style.opacity = on ? 1 : 0.15; e.t.setAttribute("fill", n.id === id ? "#ffffff" : "#c8d0dd"); });
+    edgeEls.forEach(p => { const on = p._ends.includes(id); p.setAttribute("opacity", on ? 0.9 : 0.06); p.setAttribute("stroke", on ? (COLOR[byId[id].kind] || "#3a4658") : "#3a4658"); p.setAttribute("stroke-width", on ? 1.6 : 1); });
+  }
+  function clear() {
+    nodes.forEach(n => { nodeEls[n.id].g.style.opacity = 1; });
+    edgeEls.forEach(p => { p.setAttribute("opacity", 0.5); p.setAttribute("stroke", "#3a4658"); p.setAttribute("stroke-width", 1); });
+  }
+})();
+</script>
