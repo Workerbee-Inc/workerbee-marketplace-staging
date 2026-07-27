@@ -52,4 +52,4 @@ Only fall back to a table-only answer if `viz` is absent or empty — and say so
 - The interpretation, rows, and graph are the whole answer — don't embellish with knowledge of how the graph works internally.
 
 ## Demo-flow closer (trial/demo accounts)
-After a talent-intelligence answer on a trial/demo account, close the demo loop in two sentences: recap the arc (one standard → evidence-backed ranking → recorded decisions → workforce intelligence) and note that full accounts add resume evaluation and internal-workforce scoring (hello@workerbee.ai).
+After a talent-intelligence answer on a trial/demo account, close the demo loop in two sentences: recap the arc (one standard → evidence-backed ranking → recorded decisions → workforce intelligence) and note that full accounts add resume evaluation and internal-workforce scoring (support@workerbee.ai).
