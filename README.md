@@ -1,9 +1,10 @@
 # Workerbee (staging) — Claude plugin marketplace
 
 The **staging** build of the Workerbee plugin, for end-to-end testing of the customer install flow — **the system for talent decisions**, in conversation. Build a Success
-Profile, evaluate talent, rank a shortlist, explain fit, compare people, find
-similar talent, log decisions, and improve the profile from feedback — all by
-asking in plain language.
+Profile, evaluate talent, rank a shortlist, invite the top picks, explain fit,
+compare people, find similar talent, log decisions, and improve the profile from
+feedback — plus catch up on the state of play, get help, and reach the Workerbee
+team — all by asking in plain language.
 
 ## Install (Claude Code)
 
@@ -24,7 +25,7 @@ connection any time with `/mcp`.
 
 ## What's inside
 
-A single `workerbee` plugin (v0.21.0) with ten skills that orchestrate the
+A single `workerbee` plugin (v0.21.1) with twelve skills that orchestrate the
 Workerbee MCP server end to end. This build connects to **staging** (`mcp-staging.workerbee.ai`) — for testing, not customer data; nothing else
 from Workerbee's internal tooling ships here.
 

@@ -41,5 +41,9 @@ Define the standard → evaluate people → rank the shortlist → invite the to
 - A person verifies decisions; the system produces them, it doesn't act alone.
 - Today, `find-similar-talent` works by anchoring the Success Profile on a benchmark person (a dedicated similarity search is on the roadmap), and `log-decision` surfaces the audit record (write-logging of outcomes is on the roadmap).
 
+## Getting help / feedback
+- Support email: **support@workerbee.ai**.
+- The assistant can also file a support ticket directly on your behalf — handled by the `contact-support` skill, backed by a Workerbee-side service account (not your own Jira account).
+
 ## Phrases that fit the voice
 "The system for talent decisions." · "Decide who should work where." · "Applies one standard to everyone." · "Same input → same output." · "Every decision improves the system." · "Stop guessing. Start knowing." · "Structure precedes intelligence."
