@@ -5,34 +5,9 @@ description: Evaluate internal or external people against a Workerbee Success Pr
 
 # Evaluate Talent
 
-You apply the standard to people. The same Success Profile evaluates everyone — internal employees, external applicants, contractors — the same way. Same input, same output. That consistency is what makes the results comparable and the decision defensible.
+This skill's playbook lives on the Workerbee MCP server and is resolved to your current access scope. Always load it fresh — never follow a cached copy.
 
-This skill drives the **live** Workerbee MCP server.
-
-## Voice
-Grounded, direct, precise. The point is one standard applied to everyone, internal and external. State scores as system outputs, not opinions. No hype. A person reviews the result.
-
-## Tools you orchestrate
-| Tool | Purpose |
-|---|---|
-| `create_upload_session` | Start a browser upload for the role. Params: `jobRoleId`, `jobRoleDocType` (`INTERNAL_WORKFORCE` for internal people, `APPLICANTS` for external), optional `maxFiles`. Returns `{ sessionId, uploadUrl, expiresAt, maxFiles, allowedContentTypes }`. Present `uploadUrl` — the user uploads PDF/DOCX/ZIP there; no file bytes pass through MCP. |
-| `get_upload_session_status` | Poll document processing. Param: `sessionId`. Returns `receivedFiles`, `processing.allProcessed`, `processing.anyFailed`, and `retryAfterSec` while work is in flight. Keep polling until every file is terminal (`PROCESSED` or `FAILED`); report failures honestly from each `errorMessage`. `COMPLETED` session status only means the user finished uploading — keep polling until `allProcessed`. |
-| `get_job_context` | Confirm applicants landed and matching finished. Param: `jobRoleId`. After upload processing, poll until `matchStatus` is `complete` and applicants appear under `matches.byPool` before claiming candidates are ready. |
-| `match_candidates` | Score everyone against the Success Profile. Params: `jobRoleId`, optional `limit`/`offset` (paging). **Synchronous** — returns the ranked shortlist inline. Each person carries **`displayScore`** (0–100 headline), `scores` (l1–l4 + `composite`), and `source` (Internal Profiles / Applicants / Workerbee Network); response carries `totalConsidered`. Requires extraction complete. |
-| `get_matched_profile_details` | Pull one person's full evaluation. Params: `jobRoleId`, `consultantId`. Returns structured resume + match reasoning (strengths, gaps, summary) + the four sub-scores. |
-
-## The flow
-1. **Confirm the role.** Evaluation is always against a specific Success Profile — confirm the `jobRoleId`. If none exists, route to build-success-profile first.
-2. **Ingest people.** Call `create_upload_session` with the right `jobRoleDocType` (internal employees → `INTERNAL_WORKFORCE`; outside applicants → `APPLICANTS`). Give the customer the `uploadUrl` and ask them to upload their files in the browser. Poll `get_upload_session_status` until `processing.allProcessed` (or stop on `anyFailed` and surface which files failed). Then poll `get_job_context` until `matchStatus` is `complete` so ingested applicants are ranked before you present scores.
-3. **Evaluate.** Call `match_candidates`. Everyone — uploaded internal/external plus the connected talent pool — is scored against the one standard.
-4. **Surface honestly.** Report how each `source` did (internal vs external are now directly comparable). Offer the ranked view (→ rank-shortlist) or a single person's detail (→ explain-fit).
-
-## Presentation
-- **Progress beats.** Narrate short status lines while ingesting and scoring — "Ingesting candidates…", "Applying the evaluation standard…".
-- **Always show `displayScore`** — the recruiter-facing **0–100** the tool returns (the same number TIC shows, e.g. **94**), as-is. **Never** show raw `composite` / `composite × 100`.
-- **Results table.** Columns: **Candidate · Source · Score · Recommendation**. Source: ◆ Network · ◇ Applicant · ▲ Internal. Score = `displayScore` as a 10-cell bar + number (`█████████░ 94`). Recommendation from `displayScore`: 🟢 Interview (≥80) · 🟡 Consider (65–79) · ⚪ Hold (<65). Keep internal and external in one table so they're directly comparable.
-
-## Constraints
-- Internal and external people are evaluated against the *same* profile — say so; it's the point.
-- Workerbee Network candidates are anonymized (initials only) until they connect; Internal Profiles and Applicants are the customer's own rosters and show full names.
-- Never fabricate scores or evaluations. If nobody's been added and the pool is empty, say so rather than show an empty result as a finding.
+1. Call the **`get_skill_instructions`** tool with `skillKey: "evaluate-talent"`.
+2. Follow the returned instructions exactly — they are the authoritative, up-to-date playbook for this skill.
+3. If it returns upgrade guidance instead of a playbook, relay that guidance to the user and do not run the workflow.
+4. If any tool call returns a `FEATURE_NOT_IN_PLAN` or `DEMO_EXPIRED` error, relay its `message` to the user verbatim and stop — do not improvise or fabricate results.
