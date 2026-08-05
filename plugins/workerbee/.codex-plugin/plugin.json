@@ -1,0 +1,40 @@
+{
+  "name": "workerbee",
+  "version": "0.22.0",
+  "description": "Workerbee — the system for talent decisions. Customer skills that orchestrate the Workerbee MCP server end to end: build a Success Profile, evaluate talent, rank a shortlist, manage invites, explain fit, compare people, find similar talent, log decisions, and improve the profile from feedback.",
+  "author": {
+    "name": "Workerbee Inc.",
+    "email": "ryan.spears@workerbee.ai"
+  },
+  "homepage": "https://github.com/Workerbee-Inc/workerbee-marketplace-staging",
+  "repository": "https://github.com/Workerbee-Inc/workerbee-marketplace-staging",
+  "license": "UNLICENSED",
+  "keywords": [
+    "hiring",
+    "recruiting",
+    "talent",
+    "candidates",
+    "workforce"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Workerbee (staging)",
+    "shortDescription": "One standard for every hire",
+    "longDescription": "Workerbee is the system for talent decisions, in conversation. Build a Success Profile — the reusable standard for what good looks like in a role — then evaluate internal and external people against that one standard, rank a shortlist, explain why someone ranks where they do, compare people side by side, find more people like a top performer, manage invites, and surface the auditable decision record. Feedback improves the standard and re-ranks, so the system gets better with use.",
+    "developerName": "Workerbee Inc.",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://workerbee.ai",
+    "privacyPolicyURL": "https://workerbee.ai/privacy",
+    "termsOfServiceURL": "https://workerbee.ai/terms",
+    "defaultPrompt": [
+      "Build a Success Profile for a role I'm hiring.",
+      "Rank the candidates for my open role.",
+      "Why does this candidate rank where they do?"
+    ]
+  }
+}
