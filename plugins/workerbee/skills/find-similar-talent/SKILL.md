@@ -1,6 +1,6 @@
 ---
 name: find-similar-talent
-description: Find people similar to a top performer, strong candidate, or benchmark profile for a Workerbee role. Use when a customer says "find more like [name]", "who else looks like our best PM?", "similar to this candidate", "more people like our top performer", or "show me lookalikes". Anchors the role's Success Profile on the benchmark person's strengths and surfaces the closest matches via the live Workerbee MCP server.
+description: Find people similar to a top performer, strong candidate, or benchmark profile for a Workerbee role. Use when a customer says "find more like [name]", "who else looks like our best PM?", "similar to this candidate", "more people like our top performer", or "show me lookalikes". Do NOT use for "who could back-fill/succeed/cover [name]'s role?" about an existing employee — that is a talent-intelligence question answered from the workforce graph (use the talent-intelligence skill; it needs no resume). Anchors the role's Success Profile on the benchmark person's strengths and surfaces the closest matches via the live Workerbee MCP server.
 ---
 
 # Find Similar Talent

@@ -1,0 +1,20 @@
+{
+  "name": "workerbee-staging",
+  "interface": {
+    "displayName": "Workerbee (staging)"
+  },
+  "plugins": [
+    {
+      "name": "workerbee",
+      "source": {
+        "source": "local",
+        "path": "./plugins/workerbee"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
