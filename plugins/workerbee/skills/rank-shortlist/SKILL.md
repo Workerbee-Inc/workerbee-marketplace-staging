@@ -1,6 +1,6 @@
 ---
 name: rank-shortlist
-description: Produce a ranked shortlist of people for a Workerbee role. Use when a customer says "rank them", "who are the top candidates?", "run the matching", "give me a shortlist", "score the applicants", or "who should I look at first?". Runs the live match_candidates tool (synchronous — returns the ranked list inline) and presents scannable ranked cards with one-line drivers; reads existing results via get_job_context.
+description: Produce a ranked shortlist of people for a Workerbee role. Use when a customer says "rank them", "who are the top candidates?", "run the matching", "give me a shortlist", "score the applicants", or "who should I look at first?". Runs the live match_candidates tool (synchronous — returns the ranked list inline) and presents scannable ranked cards with one-line drivers; reads existing results via get_job_context. Reads skillCounts from get_success_profile to tell whether the standard behind the ranking is still the broad base occupation graph, and offers build-success-profile's Tailor step when it is.
 ---
 
 # Rank Shortlist
