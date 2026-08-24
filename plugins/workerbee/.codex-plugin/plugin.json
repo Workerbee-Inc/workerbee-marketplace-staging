@@ -1,6 +1,6 @@
 {
   "name": "workerbee",
-  "version": "0.23.0",
+  "version": "0.23.1",
   "description": "Workerbee — the system for talent decisions. Customer skills that orchestrate the Workerbee MCP server end to end: build a Success Profile, evaluate talent, rank a shortlist, manage invites, explain fit, compare people, find similar talent, log decisions, and improve the profile from feedback.",
   "author": {
     "name": "Workerbee Inc.",
