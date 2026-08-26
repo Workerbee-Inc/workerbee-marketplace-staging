@@ -40,7 +40,7 @@ connect the Workerbee MCP server on its own and the tools still work.
 
 ## What's inside
 
-A single `workerbee` plugin (v0.23.0) with 15 skills that
+A single `workerbee` plugin (v0.23.1) with 15 skills that
 orchestrate the Workerbee MCP server end to end. One bundle serves both
 platforms: the skills and the MCP config are shared, and each platform reads
 its own manifest (`.claude-plugin/plugin.json` for Claude,
